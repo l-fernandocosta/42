@@ -8,21 +8,43 @@ import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/UserContext';
 import { toast } from 'react-toastify';
+import { FormEvent, useState } from 'react';
+import { child, get, ref } from 'firebase/database';
+import { database } from '../services/firebase';
 
 
 export function Home() {
   let navigate = useNavigate();
   const { loginWithGoogle, isLoading, user } = useAuth();
+  const [inputRoom, setInputRoom] = useState('');
 
 
   async function handleCreateRoom() {
 
     if (user === undefined) {
       loginWithGoogle()
-        .then(() => navigate("/rooms/new-room"))
-        .then(() => toast.success('Welcome, SpaceTraveller 🚀 ', { position: "bottom-center", theme: "dark" }))
+        .then(() => navigate("/room/new"))
+        .then(() => toast.success('Welcome, SpaceTraveller 🚀 '))
     } else {
-      navigate("/rooms/new-room")
+      navigate("/room/new")
+    }
+  }
+
+  async function handleJoinRoom(e : FormEvent) {
+    e.preventDefault();
+  
+    if(inputRoom.trim() === ''){
+      toast.error('👨‍🚀 Please, type some valid room ID. ')
+      return;
+    }else {
+      const roomRef =  ref(database);
+      get(child(roomRef, `rooms/${inputRoom}`)).then((snapshot) => {
+        if(snapshot.exists()){
+          navigate(`/${inputRoom}`)
+        } else {
+          toast.error("🛰 Hey, I'm pretty sure that this room doesn't exists, Bro. ")
+        }
+      })
     }
   }
 
@@ -56,8 +78,15 @@ export function Home() {
         </div>
         <div> - ou entre em uma sala - </div>
 
-        <FormId action="">
-          <input type="text" id='room-id' maxLength={10} placeholder='Type the ID room' />
+        <FormId onSubmit={handleJoinRoom}>
+          <input
+            type="text"
+            id='room-id'
+         /*    maxLength={10} */
+            placeholder='Type the ID room'
+            value= {inputRoom}
+            onChange ={ e => setInputRoom(e.target.value)}
+          />
           <SubmitButton type='submit'><GiTowel size={'35px'} className='towel' />TAKE THE TOWEL</SubmitButton>
         </FormId>
 

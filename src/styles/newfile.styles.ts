@@ -10,6 +10,7 @@ export const WhaleImg = styled.img`
 `
 
 export const Anchor = styled.a`
+  text-decoration: none;
   display: flex;
   text-decoration: none;
   font-size: 1.2rem;

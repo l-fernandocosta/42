@@ -14,7 +14,7 @@ ReactDOM.render(
     
       <UserProvider>
         <App />
-        <ToastContainer/>
+        <ToastContainer position='bottom-center' theme='dark' autoClose= {2500}/>
       </UserProvider>
    
   </React.StrictMode>,

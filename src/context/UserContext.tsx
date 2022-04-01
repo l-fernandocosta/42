@@ -15,7 +15,8 @@ export function UserProvider({ children }: UserContextProps) {
   const [isLoading, setIsLoading] = useState(false);
   const provider = new GoogleAuthProvider();
 
-  useEffect(() => {
+  useEffect( () => {
+
     const unsubscribe = Auth.onAuthStateChanged(user => {
       if (user) {
         const { displayName, email, photoURL, uid } = user;
