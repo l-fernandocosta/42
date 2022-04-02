@@ -1,22 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import { App } from './App';
-import { UserProvider } from './context/UserContext';
-import './services/firebase'
-import './styles/index.css'
+import { App } from "./App";
+import { UserProvider } from "./context/UserContext";
+import "./services/firebase";
+import "./styles/index.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    
-      <UserProvider>
-        <App />
-        <ToastContainer position='bottom-center' theme='dark' autoClose= {2500}/>
-      </UserProvider>
-   
+    <UserProvider>
+      <App />
+      <ToastContainer position="bottom-center" theme="dark" autoClose={1500} 
+      hideProgressBar/>
+    </UserProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
