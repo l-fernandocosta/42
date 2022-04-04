@@ -1,12 +1,12 @@
-import astronaut from "../assets/astronaut.png";
-import cachalote from "../assets/cachalote.png";
+import astronaut from "../../assets/astronaut.png";
+import cachalote from "../../assets/cachalote.png";
 
-import { Container, Dot, FormId, SubmitButton } from "../styles/home.styles";
+import { Container, Dot, FormId, SubmitButton } from "../Home/styles";
 
 import { GiTowel } from "react-icons/gi";
-import { Anchor, Title, WhaleImg } from "../styles/newfile.styles";
+import { Anchor, Title, WhaleImg } from "./styles";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/UserContext";
+import { useAuth } from "../../context/UserContext";
 import { FormEvent, useState } from "react";
 import { getDatabase, push, ref, set } from "firebase/database";
 import { toast } from "react-toastify";
@@ -28,7 +28,11 @@ export function NewChat() {
       const roomRef = ref(db, "rooms");
       const newRoomRef = push(roomRef);
       set(newRoomRef, {
-        author: user?.uid,
+        author: {
+          name: user?.name,
+          email: user?.email,
+          avatar: user?.photo,
+        },
         title: newRoomInput,
       }).then(() => {
         navigate(`/${newRoomRef.key}`);

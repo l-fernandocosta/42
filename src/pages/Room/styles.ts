@@ -22,7 +22,7 @@ span{
 
 
 button{
-  margin-right: 3rem;
+  margin-right: 1rem;
   display: flex;
   align-items: center;
   height: 3rem;
@@ -33,7 +33,8 @@ button{
   cursor: pointer;
   transition: all 0.4s;
   font-weight: bold;
-  padding: 0.4rem;
+  font-size: 1rem;
+  padding: 0rem 1rem 0 2rem;
 
   :hover{
     background-color: var(--yellow-700);
@@ -42,9 +43,12 @@ button{
   }
 
   .icon-copy{
-    font-size: 0.2rem;
     border-left: 1px solid white;
     height: 100%;
+    margin-left: 1rem;
+    padding: 0 0 0 1rem;
+    width: 1rem;
+    height: 2.1rem;
     width: 30%;
   }
 }

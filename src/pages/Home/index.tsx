@@ -1,16 +1,16 @@
-import astronaut from '../assets/astronaut.png';
+import astronaut from '../../assets/astronaut.png';
 
-import { Container, Dot, FormId, GoogleButton, SubmitButton } from '../styles/home.styles';
+import { Container, Dot, FormId, GoogleButton, SubmitButton } from './styles';
 
 import { GiTowel, GiAstronautHelmet } from 'react-icons/gi';
 import { FcGoogle } from 'react-icons/fc';
 
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/UserContext';
+import { useAuth } from '../../context/UserContext';
 import { toast } from 'react-toastify';
 import { FormEvent, useState } from 'react';
 import { child, get, ref } from 'firebase/database';
-import { database } from '../services/firebase';
+import { database } from '../../services/firebase';
 
 
 export function Home() {
