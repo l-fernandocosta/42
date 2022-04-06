@@ -12,67 +12,28 @@ import { FaUserAstronaut } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 import { useParams } from "react-router-dom";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useCallback, useState } from "react";
 import { useAuth } from "../../context/UserContext";
-import { child, get, getDatabase, push, ref, set } from "firebase/database";
+import { getDatabase, push, ref, set } from "firebase/database";
 import { Questions } from "../../Components/Questions";
 
 import {Fade} from "react-awesome-reveal";
-import { FirebaseQuestionProps, QuestionsProps } from "./props";
+import { useRoom } from "./useRoom";
 
 
 export function Room() {
   const { user, loginWithGoogle } = useAuth();
   const { id } = useParams();
   const [newQuestion, setNewQuestion] = useState("");
-  const [questions, setQuestions] = useState<QuestionsProps[]>([]);
-  const [title, setTitle] = useState("");
-
-  useEffect(() => {
-    const dbRef = ref(getDatabase());
-
-    get(child(dbRef, `rooms/${id}/questions`)).then((snapshot) => {
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        const fbQuestions: FirebaseQuestionProps = data ?? {};
-        const parsedQuestions = Object.entries(fbQuestions).map(
-          (questionObj) => {
-            const data = questionObj[1];
-            const key = questionObj[0];
-
-            return {
-              id: key,
-
-              author: {
-                name: data.author.name,
-                email: data.author.email,
-                avatar: data.author.avatar,
-              },
-              content: data.question,
-              isHighlighted: data.isHighlighted,
-              isAnswered: data.isAnswered,
-            };
-          }
-        );
-        setQuestions(parsedQuestions);
-      } else {
-        toast.info("There's no questions in this room yet ! 😭 ");
-      }
-    });
-
-    get(child(dbRef, `rooms/${id}`)).then((snapshot) => {
-      const dataRef = snapshot.val();
-      const roomTitle = dataRef.title;
-      setTitle(roomTitle);
-    });
-  }, [id, questions]);
-
-  const handleCopyClipboard = () => {
-    navigator.clipboard.writeText(String(id));
-    return toast.info("Copied to clipboard.  😊", {
-      position: "top-left",
-    });
-  };
+ 
+  const {questions, title} = useRoom(id);
+  
+  const handleCopyClipboard = useCallback(() => {
+      navigator.clipboard.writeText(String(id));
+      return toast.info("Copied to clipboard.  😊", {
+        position: "top-left",
+      });
+  }, [id])
 
   const handleLogin = () => {
     loginWithGoogle().then(() => toast.success("Welcome traveller !"));
@@ -81,7 +42,7 @@ export function Room() {
   const handleNewQuestion = (e: FormEvent) => {
     e.preventDefault();
 
-    if (newQuestion.trim() === "" || newQuestion.length < 15) {
+    if (newQuestion.trim() === "" || newQuestion.length < 5) {
       toast.error("Wait, you have to write something ! 😒");
     } else {
       const db = getDatabase();
@@ -93,6 +54,7 @@ export function Room() {
           name: user?.name,
           email: user?.email,
           avatar: user?.photo,
+          authorId: user?.uid, 
         },
         question: newQuestion,
         isHighlighted: false,
@@ -103,6 +65,7 @@ export function Room() {
     }
   };
 
+ 
   return (
     <Container>
       <Header>
@@ -133,7 +96,7 @@ export function Room() {
         </UserAvatar>
         <textarea
           id="placeholder-text"
-          placeholder="Did you bring the towell ? So, make the right question "
+          placeholder="Have you bring the towell ? So, make the right question. 🚀 "
           value={newQuestion}
           onChange={(e) => setNewQuestion(e.target.value)}
         ></textarea>
@@ -143,20 +106,26 @@ export function Room() {
           <FaUserAstronaut className="astronaut-icon" />
         </SendQuestionBtn>
         
-        <div >
+        
           {questions.map((question) => {
             return (
               <>
-              <Fade direction="right">
+              <Fade direction="bottom-left">
                   <Questions
+                  likeCount={question.likeCount}
+                  likeId={question.likeId}
                   content={question.content}
                   author={question.author}
-                  key={question.id}/>
+                  key={question.questionId}
+                  questionId={question.questionId}
+                  roomId = {id}
+                  />
+                  
               </Fade>
               </>
             );
           })}
-        </div>
+     
       </QuestionArea>
     </Container>
   );

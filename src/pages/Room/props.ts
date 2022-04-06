@@ -4,22 +4,32 @@ export type FirebaseQuestionProps = Record<
     author: {
       name: string;
       avatar: string;
-      email: string;
+      authorId: string;
+      email: string; 
     };
+    
     isAnswered: boolean;
     isHighlighted: boolean;
     question: string;
+    like: Record<string, {
+      authorId: string; 
+    }>
+    
   }
 >;
 
 export type QuestionsProps = {
-  id: string;
+  questionId: string;
   author: {
     name: string;
     avatar: string;
-    email: string;
+    authorId: string;
+    email: string; 
   };
   isAnswered: boolean;
   isHighlighted: boolean;
   content: string;
+  likeId: string | undefined;
+  likeCount: number; 
+ 
 };

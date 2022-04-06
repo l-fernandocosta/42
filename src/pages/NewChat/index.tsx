@@ -30,8 +30,9 @@ export function NewChat() {
       set(newRoomRef, {
         author: {
           name: user?.name,
-          email: user?.email,
+          authorId: user?.uid,
           avatar: user?.photo,
+          email: user?.email, 
         },
         title: newRoomInput,
       }).then(() => {
