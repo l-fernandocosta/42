@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { App } from "./App";
 import { UserProvider } from "./context/UserContext";
 import "./services/firebase";
@@ -13,8 +12,13 @@ ReactDOM.render(
   <React.StrictMode>
     <UserProvider>
       <App />
-      <ToastContainer position="bottom-center" theme="dark" autoClose={1500} 
-      hideProgressBar/>
+
+      <ToastContainer
+        position="bottom-center"
+        theme="dark"
+        autoClose={1500}
+        hideProgressBar
+      />
     </UserProvider>
   </React.StrictMode>,
   document.getElementById("root")

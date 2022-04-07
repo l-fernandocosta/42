@@ -5,6 +5,7 @@ import { getDatabase, push, ref, remove, set } from "firebase/database";
 import {
   useMatch,
 } from "react-router-dom";
+import { Modal, ModalProps } from "../Modal";
 
 interface QuestionProps {
   content: string;
@@ -17,6 +18,7 @@ interface QuestionProps {
   questionId: string;
   likeCount: number;
   likeId: string | undefined;
+  key: string, 
 }
 
 export const Questions = ({
@@ -26,10 +28,10 @@ export const Questions = ({
   roomId,
   likeCount,
   likeId,
+  key, 
 }: QuestionProps) => {
   const isAdminRoom = useMatch(`/admin/${roomId}`);
 
-  console.log(isAdminRoom);
   const handleLike = (id: string, likeId: string | undefined) => {
     const db = getDatabase();
     if (likeId) {
@@ -47,9 +49,14 @@ export const Questions = ({
     }
   };
 
+
+  function handleDelete({roomId, questionId} : ModalProps) {
+    Modal({roomId, questionId});
+  }
+  
   return (
     <Container>
-      <div>
+      <div key={key}>
         <p>{content}</p>
       </div>
 
@@ -62,9 +69,9 @@ export const Questions = ({
           {isAdminRoom?.pathname === `/admin/${roomId}` ? (
             <IconButton className="delete"
               type="button"
-              onClick={() => {}}
+              onClick={() =>  handleDelete({roomId, questionId})}
             >
-              <IoTrashOutline className="delete-icon"/>
+              <IoTrashOutline className="delete-icon" />
             </IconButton>
           ) : (
             <IconButton

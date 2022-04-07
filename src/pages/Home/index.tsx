@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import { FormEvent, useState } from 'react';
 import { child, get, ref } from 'firebase/database';
 import { database } from '../../services/firebase';
+import swal from 'sweetalert';
 
 
 export function Home() {
@@ -39,9 +40,25 @@ export function Home() {
     }else {
       const roomRef =  ref(database);
       get(child(roomRef, `rooms/${inputRoom}`)).then((snapshot) => {
+        if(snapshot.hasChild("closedAt")){
+          swal(
+            "YOU SHAAALL NOT PASS 🧙",
+            `It looks like this room has already been closed. 
+                Do you wanna start a new question journey?
+            `,
+            {
+              dangerMode: true, 
+              icon: "error"
+            }
+          ) 
+          return; 
+           
+        }
         if(snapshot.exists()){
+          
           navigate(`/${inputRoom}`)
-        } else {
+        }
+        else {
           toast.error("🛰 Hey, I'm pretty sure that this room doesn't exists, Bro. ")
         }
       })

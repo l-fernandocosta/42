@@ -1,4 +1,4 @@
-import { child, get, getDatabase, onValue, ref } from "firebase/database";
+import { child, get, getDatabase, off, onValue, ref } from "firebase/database";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/UserContext";
@@ -42,17 +42,21 @@ export const useRoom = (id: string | undefined) => {
         );
         setQuestions(parsedQuestions);
       } else {
-        toast.info("There's no questions in this room yet ! 😭 ");
+        toast.warn("There's no questions in this room yet 😩")
+        setQuestions([])
       }
+      
     });
-
-  
 
     get(child(dbRef, `rooms/${id}`)).then((snapshot) => {
       const dataRef = snapshot.val();
       const roomTitle = dataRef.title;
       setTitle(roomTitle);
     });
+   
+    return () => {
+      off(questionsRef);
+    }
   }, [id, user?.uid]);
   return { questions, title };
 };

@@ -106,25 +106,28 @@ export function Room() {
           <FaUserAstronaut className="astronaut-icon" />
         </SendQuestionBtn>
         
-        
-          {questions.map((question) => {
-            return (
-              <>
-              <Fade direction="bottom-left">
-                  <Questions
-                  likeCount={question.likeCount}
-                  likeId={question.likeId}
-                  content={question.content}
-                  author={question.author}
-                  key={question.questionId}
-                  questionId={question.questionId}
-                  roomId = {id}
-                  />
+          {
+            questions.map((question) => {
+              return (
+                <>
+                <Fade direction="down">
+                    <Questions
                   
-              </Fade>
-              </>
-            );
-          })}
+                    likeCount={question.likeCount}
+                    likeId={question.likeId}
+                    content={question.content}
+                    author={question.author}
+                    key={question.questionId}
+                    questionId={question.questionId}
+                    roomId = {id}
+                    />
+                    
+                </Fade>
+                </>
+              );
+            })
+          }
+      
      
       </QuestionArea>
     </Container>
