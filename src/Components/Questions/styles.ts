@@ -80,6 +80,10 @@ export const UserProfile = styled.div`
   @media (max-width: 512px) {
     img{
       width: 3rem; 
+      margin-top: 5.2rem; 
+    }
+    span{
+      font-size: 0rem; 
     }
   
   }
@@ -149,9 +153,7 @@ export const IconButton = styled.button`
     color: var(--red-delete); 
   }
 
-  .delete.highlight-icon{
-    border: 1px solid var(--color-span);
-  }
+
   .highlight-icon{
     
     transition: all 0.5s; 
@@ -193,4 +195,33 @@ export const IconButton = styled.button`
       font-size: 2rem; 
     }
   };
+
+  @media (max-width: 512px) {
+    .likebtn{
+     font-size: 1.5rem; 
+    }
+
+    &#highlight-question {
+      background-color: var(--color-span);
+      padding: 0.3rem; 
+      .highlight-icon{
+        color: white; 
+      }
+    }
+    &#answered-question{
+      background-color: var(--green);
+      padding: 0.3rem; 
+      .answered-icon{
+        color: white; 
+      }
+    }
+    &.delete{
+      background-color: var(--red-delete);
+      padding: 0.3rem;
+      .delete-icon{
+        color: white; 
+      }
+    }
+  
+  }
 `;
