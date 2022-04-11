@@ -8,7 +8,8 @@
   --yellow: #ff9912;
   --yellow-700: #d1ae6c;
   --gray-800: #a8a8b3;
-  --red-delete: #f4796b; 
+  --red-delete: #f4796b;
+  --green: #45b08c; 
 }
 
 *{
@@ -21,6 +22,7 @@
 body{
   background: var(--bg-color);
   color: var(--font-color);
+  -webkit-font-smoothing: antialiased !important;
 }
 
 body, input, button, p, textarea{

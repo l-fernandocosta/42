@@ -5,6 +5,7 @@ import {
   TitleRoom,
   Container,
   SendQuestionBtn,
+  CopyButton,
 } from "./styles";
 
 import { IoCopy } from "react-icons/io5";
@@ -17,23 +18,22 @@ import { useAuth } from "../../context/UserContext";
 import { getDatabase, push, ref, set } from "firebase/database";
 import { Questions } from "../../Components/Questions";
 
-import {Fade} from "react-awesome-reveal";
+import { Fade } from "react-awesome-reveal";
 import { useRoom } from "./useRoom";
-
 
 export function Room() {
   const { user, loginWithGoogle } = useAuth();
   const { id } = useParams();
   const [newQuestion, setNewQuestion] = useState("");
- 
-  const {questions, title} = useRoom(id);
-  
+
+  const { questions, title } = useRoom(id);
+
   const handleCopyClipboard = useCallback(() => {
-      navigator.clipboard.writeText(String(id));
-      return toast.info("Copied to clipboard.  😊", {
-        position: "top-left",
-      });
-  }, [id])
+    navigator.clipboard.writeText(String(id));
+    return toast.info("Copied to clipboard.  😊", {
+      position: "top-left",
+    });
+  }, [id]);
 
   const handleLogin = () => {
     loginWithGoogle().then(() => toast.success("Welcome traveller !"));
@@ -54,7 +54,7 @@ export function Room() {
           name: user?.name,
           email: user?.email,
           avatar: user?.photo,
-          authorId: user?.uid, 
+          authorId: user?.uid,
         },
         question: newQuestion,
         isHighlighted: false,
@@ -65,18 +65,18 @@ export function Room() {
     }
   };
 
- 
   return (
     <Container>
       <Header>
         <span>42.</span>
-        <button onClick={handleCopyClipboard}>
-          {id}
+        <CopyButton onClick={handleCopyClipboard}>
+          <span>{id}</span>
           <IoCopy className="icon-copy" />
-        </button>
+        </CopyButton>
       </Header>
 
       <QuestionArea onSubmit={handleNewQuestion}>
+       
         <TitleRoom>
           <h1>Room {title}</h1>
           <span>{questions.length} questions</span>
@@ -105,30 +105,26 @@ export function Room() {
           Ask Someone
           <FaUserAstronaut className="astronaut-icon" />
         </SendQuestionBtn>
-        
-          {
-            questions.map((question) => {
-              return (
-                <>
-                <Fade direction="down">
-                    <Questions
-                  
-                    likeCount={question.likeCount}
-                    likeId={question.likeId}
-                    content={question.content}
-                    author={question.author}
-                    key={question.questionId}
-                    questionId={question.questionId}
-                    roomId = {id}
-                    />
-                    
-                </Fade>
-                </>
-              );
-            })
-          }
-      
-     
+
+        {questions.map((question) => {
+          return (
+            <>
+              <Fade direction="down">
+                <Questions
+                  isHighlighted={question.isHighlighted}
+                  isAnswered={question.isAnswered}
+                  likeCount={question.likeCount}
+                  likeId={question.likeId}
+                  content={question.content}
+                  author={question.author}
+                  key={question.questionId}
+                  questionId={question.questionId}
+                  roomId={id}
+                />
+              </Fade>
+            </>
+          );
+        })}
       </QuestionArea>
     </Container>
   );

@@ -41,16 +41,16 @@ export function UserProvider({ children }: UserContextProps) {
   }, [])
 
   async function loginWithGoogle() {
-    setIsLoading(true);
-    const result = await signInWithPopup(Auth, provider)
+    setIsLoading(true)
+    const result = await signInWithPopup(Auth, provider).finally(() => {setIsLoading(false)})
 
     if (result.user) {
+      
       const { displayName, email, photoURL, uid } = result.user;
 
       if (!displayName || !photoURL) {
         throw new Error('Missing data from Google')
       }
-
       setUser(
         {
           name: displayName,
@@ -59,11 +59,11 @@ export function UserProvider({ children }: UserContextProps) {
           uid: uid,
         }
       )
+      
     }
-    setIsLoading(false)
-
+    
+  
   }
-
   return (
     <UserContext.Provider value={{ user, loginWithGoogle, isLoading }}>{children}</UserContext.Provider>
   )

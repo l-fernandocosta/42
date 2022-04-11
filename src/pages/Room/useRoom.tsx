@@ -58,5 +58,6 @@ export const useRoom = (id: string | undefined) => {
       off(questionsRef);
     }
   }, [id, user?.uid]);
+  
   return { questions, title };
 };

@@ -1,4 +1,10 @@
-import { Header, QuestionArea, Container } from "../Room/styles";
+import {
+  Header,
+  QuestionArea,
+  Container,
+  CopyButton,
+  DeleteButton,
+} from "../Room/styles";
 
 import { IoCopy } from "react-icons/io5";
 import { FaDoorClosed } from "react-icons/fa";
@@ -12,11 +18,13 @@ import { useRoom } from "../Room/useRoom";
 import { database } from "../../services/firebase";
 import { ref, update } from "firebase/database";
 import swal from "sweetalert";
+import { useAuth } from "../../context/UserContext";
 
 export function AdminRoom() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { title, questions } = useRoom(id);
+  const {user} = useAuth();
 
   const handleCopyClipboard = () => {
     navigator.clipboard.writeText(String(id));
@@ -30,7 +38,7 @@ export function AdminRoom() {
     swal("Hey, this will remove your room 😐", "Are you sure?", {
       icon: "error",
       buttons: ["NAAAH", "OOOOH, YESS!"],
-      dangerMode: true, 
+      dangerMode: true,
     }).then((value) => {
       if (value === true) {
         const updateRoom = update(roomRef, {
@@ -46,29 +54,37 @@ export function AdminRoom() {
     <Container>
       <Header>
         <span>42.</span>
-        <button onClick={handleCopyClipboard}>
-          {id}
+        <div className="IconsCopyClose">
+        <CopyButton onClick={handleCopyClipboard}>
+          <span>{id}</span>
           <IoCopy className="icon-copy" />
-        </button>
+        </CopyButton>
 
-        <button
+        <DeleteButton
           onClick={() => {
             handleCloseRoom(id);
           }}
         >
-          Encerrar Sala <FaDoorClosed className="close-room" />
-        </button>
+          <span>
+            Encerrar Sala
+          </span>
+          <FaDoorClosed className="close-room" />
+        </DeleteButton>
+        </div>
       </Header>
 
       <QuestionArea>
         <h1>
-          There are {questions.length} question(s) in the {title} room!
+          Welcome, {user?.name} ! 🚀 <br/>
+          {questions.length > 0 && (<h2>There are {questions.length} question(s) 😊</h2>)}
         </h1>
         {questions.map((question) => {
           return (
             <>
               <Fade direction="down">
                 <Questions
+                  isHighlighted={question.isHighlighted}
+                  isAnswered={question.isAnswered}
                   likeId={question.likeId}
                   likeCount={question.likeCount}
                   roomId={id}

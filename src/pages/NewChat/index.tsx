@@ -4,7 +4,7 @@ import cachalote from "../../assets/cachalote.png";
 import { Container, Dot, FormId, SubmitButton } from "../Home/styles";
 
 import { GiTowel } from "react-icons/gi";
-import { Anchor, Title, WhaleImg } from "./styles";
+import { Anchor, LinkField, Title, WhaleImg } from "./styles";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/UserContext";
 import { FormEvent, useState } from "react";
@@ -32,7 +32,7 @@ export function NewChat() {
           name: user?.name,
           authorId: user?.uid,
           avatar: user?.photo,
-          email: user?.email, 
+          email: user?.email,
         },
         title: newRoomInput,
       }).then(() => {
@@ -76,10 +76,11 @@ export function NewChat() {
             <GiTowel size={"35px"} className="towel" />
           </SubmitButton>
         </FormId>
-
-        <Link to={"/"}>
-          <Anchor>Already have a room id?</Anchor>
-        </Link>
+        <LinkField>
+          <Link className="link" to={"/"}>
+            <Anchor>Already have a room id?</Anchor>
+          </Link>
+        </LinkField>
       </main>
     </Container>
   );
