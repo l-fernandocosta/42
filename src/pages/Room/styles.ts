@@ -264,15 +264,15 @@ export const SendQuestionBtn = styled.button`
 export const AdminButton = styled.button`
   position: absolute;
   right: 34rem;
-  top: 17rem;
-  padding: 0.5rem;
+  top: 17.4rem;
+  padding: 0.3rem; 
   cursor: pointer;
   border-radius: 5rem;
   background-color: transparent;
   color: var(--yellow-700);
   border: 1px solid var(--yellow-700);
   
-  transition: all 0.5s;
+  transition: all 0.7s;
 
   :hover {
     background-color: var(--yellow-700);
@@ -282,7 +282,7 @@ export const AdminButton = styled.button`
     .gear-icon {
       animation-name: gear-rotate;
       animation-timing-function: linear;
-      animation-duration: 3s;
+      animation-duration: 4s;
       animation-iteration-count: infinite;
       font-weight: bold; 
       
@@ -291,15 +291,16 @@ export const AdminButton = styled.button`
   }
   .gear-icon {
     font-size: 2rem;
-
   }
-
   @keyframes gear-rotate {
-    from {
-      -moz-transform: rotate(0deg);
-    }
-    to {
-      -moz-transform: rotate(360deg);
+    from {-moz-transform: rotate(0deg);}
+    to {-moz-transform: rotate(360deg);}
+  }
+  @media (max-width: 512px) {
+    top: 17rem; 
+    right: 3rem; 
+    .gear-icon{
+      font-size: 1.4rem;
     }
   }
 `;
