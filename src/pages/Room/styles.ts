@@ -215,6 +215,8 @@ export const QuestionArea = styled.form`
   }
   h1 {
     color: white;
+    text-transform: uppercase; 
+  
   }
 
   @media (max-width: 512px) {
@@ -304,3 +306,30 @@ export const AdminButton = styled.button`
     }
   }
 `;
+
+export const ContainerImage = styled.div`
+display: flex; 
+flex-direction: column; 
+text-align: center; 
+align-items: center; 
+
+span{
+  color: var(--question-color);
+}
+img{
+  opacity: 40%;
+  margin-top: 3rem; 
+}
+
+@media (max-width: 512px) {
+
+  span{
+    font-size: 1rem;
+  }
+
+  img{
+    width: 22rem; 
+  }
+}
+
+`
