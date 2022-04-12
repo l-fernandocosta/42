@@ -16,14 +16,14 @@ import { Questions } from "../../Components/Questions";
 import { Fade } from "react-awesome-reveal";
 import { useRoom } from "../Room/useRoom";
 import { database } from "../../services/firebase";
-import { ref, update } from "firebase/database";
+import { getDatabase, onValue, ref, update } from "firebase/database";
 import swal from "sweetalert";
 import { useAuth } from "../../context/UserContext";
 
 export function AdminRoom() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { title, questions } = useRoom(id);
+  const {  questions } = useRoom(id);
   const {user} = useAuth();
 
   const handleCopyClipboard = () => {
@@ -34,6 +34,7 @@ export function AdminRoom() {
   };
 
   const handleCloseRoom = (id: string | undefined) => {
+
     const roomRef = ref(database, `rooms/${id}`);
     swal("Hey, this will remove your room 😐", "Are you sure?", {
       icon: "error",
@@ -50,10 +51,13 @@ export function AdminRoom() {
       }
     });
   };
+
+
+
   return (
     <Container>
       <Header>
-        <span>42.</span>
+        <span >42.</span>
         <div className="IconsCopyClose">
         <CopyButton onClick={handleCopyClipboard}>
           <span>{id}</span>
@@ -74,6 +78,7 @@ export function AdminRoom() {
       </Header>
 
       <QuestionArea>
+     
         <h1>
           Welcome, {user?.name} ! 🚀 <br/>
           {questions.length > 0 && (<h2>There are {questions.length} question(s) 😊</h2>)}

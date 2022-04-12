@@ -7,6 +7,7 @@ import { FirebaseQuestionProps, QuestionsProps } from "./props";
 export const useRoom = (id: string | undefined) => {
   const [questions, setQuestions] = useState<QuestionsProps[]>([]);
   const [title, setTitle] = useState("");
+  const [ roomAuthorId, setRoomAuthorId] = useState();
   const { user } = useAuth();
 
   useEffect(() => {
@@ -53,11 +54,20 @@ export const useRoom = (id: string | undefined) => {
       const roomTitle = dataRef.title;
       setTitle(roomTitle);
     });
+    const roomRef = ref(db, `rooms/${id}/author/authorId`);
+    onValue(roomRef, (snapshot) => {
+      const data = snapshot.val();  
+      setRoomAuthorId(data);
+      
+
+    })
+    
    
     return () => {
       off(questionsRef);
+      off(roomRef);
     }
   }, [id, user?.uid]);
   
-  return { questions, title };
+  return { questions, title, roomAuthorId };
 };

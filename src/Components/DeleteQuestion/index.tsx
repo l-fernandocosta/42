@@ -7,7 +7,7 @@ export interface ModalProps {
   questionId: string;
 }
 
-export const Modal = ({ roomId, questionId }: ModalProps) => {
+export const DeleteQuestion = ({ roomId, questionId }: ModalProps) => {
   swal({
     className: "swal-modal",
     title: "HOLD ON, SPACE-TRAVELLER ! ✋",

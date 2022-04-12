@@ -1,14 +1,13 @@
 import { Container, UserProfile, Footer, Icons, IconButton } from "./styles";
-import { AiOutlineRocket,AiOutlineCheck} from "react-icons/ai";
+import { AiOutlineRocket, AiOutlineCheck } from "react-icons/ai";
 import { IoTrashOutline } from "react-icons/io5";
 import { RiSpaceShipLine } from "react-icons/ri";
 
 import { getDatabase, push, ref, remove, set, update } from "firebase/database";
-import {
-  useMatch,
-} from "react-router-dom";
-import { Modal, ModalProps } from "../Modal";
+import { useMatch } from "react-router-dom";
+import { DeleteQuestion, ModalProps } from "../DeleteQuestion";
 import { toast } from "react-toastify";
+import swal from "sweetalert";
 
 interface QuestionProps {
   content: string;
@@ -21,9 +20,9 @@ interface QuestionProps {
   questionId: string;
   likeCount: number;
   likeId: string | undefined;
-  key: string, 
-  isHighlighted: boolean, 
-  isAnswered: boolean, 
+  key: string;
+  isHighlighted: boolean;
+  isAnswered: boolean;
 }
 
 export const Questions = ({
@@ -34,8 +33,8 @@ export const Questions = ({
   likeCount,
   likeId,
   key,
-  isHighlighted, 
-  isAnswered, 
+  isHighlighted,
+  isAnswered,
 }: QuestionProps) => {
   const isAdminRoom = useMatch(`/admin/${roomId}`);
 
@@ -56,33 +55,51 @@ export const Questions = ({
     }
   };
 
-  const handleDelete = ({roomId, questionId} : ModalProps) => {
-    Modal({roomId, questionId});
-  }
+  const handleDelete = ({ roomId, questionId }: ModalProps) => {
+    DeleteQuestion({ roomId, questionId });
+  };
 
-  const  handleHighlightQuestionUp = ({roomId, questionId} : ModalProps) => {
+  const handleHighlightQuestionUp = ({ roomId, questionId }: ModalProps) => {
     const db = getDatabase();
     const questionRef = ref(db, `rooms/${roomId}/questions/${questionId}`);
     update(questionRef, {
-      isHighlighted: true, 
+      isHighlighted: true,
     }).then(() => {
-      toast.success("The question now is highlighted !!")
-    })
-  }
+      toast.success("The question now is highlighted !!");
+    });
+  };
 
-  const handleAnsweredQuestion = ({roomId, questionId} : ModalProps )=> {
+  const handleAnsweredQuestion = ({ roomId, questionId }: ModalProps) => {
     const db = getDatabase();
-    const questionRef = ref(db, `rooms/${roomId}/questions/${questionId}`);
-    update(questionRef, {
-      isAnswered: true, 
+    swal({
+      title: "Kirk, if you want to abort the mission, that's completely cool.  🤔",
+      text: "Marking the question as answered will not allow you to receive more likes and answers ",
+      icon: "error", 
+      dangerMode: true, 
+      buttons: ["I'm not cool", "Abort Mission 🖖"]
     }).then(() => {
-      toast.success("The question is now answered !")
-    })
-  }
+      const questionRef = ref(db, `rooms/${roomId}/questions/${questionId}`);
+    update(questionRef, {
+      isAnswered: true,
+    }).then(() => {
+     swal("YOU'RE BREATHTAKING ❤️", "You question is answered now. ", {
+       dangerMode: true, 
+     });
+    });
+    });
+    
+  };
 
   return (
-    <Container  className={!isAnswered && isHighlighted ? "highlighted-class" : "" ||
-    isAnswered ? "answered-class" : ""}>
+    <Container
+      className={
+        !isAnswered && isHighlighted
+          ? "highlighted-class"
+          : "" || isAnswered
+          ? "answered-class"
+          : ""
+      }
+    >
       <div key={key}>
         <p>{content}</p>
       </div>
@@ -94,29 +111,31 @@ export const Questions = ({
         </UserProfile>
         <Icons>
           {isAdminRoom?.pathname === `/admin/${roomId}` ? (
-           <Icons>
-              <IconButton className="delete"
-              type="button"
-              onClick={() =>  handleDelete({roomId, questionId})}
-            >
-              <IoTrashOutline className="delete-icon" />
-
-            </IconButton>
-              <IconButton id="highlight-question"
-              type="button"
-              onClick={() =>  handleHighlightQuestionUp({roomId, questionId})}
-            >
-              <RiSpaceShipLine className="highlight-icon" />
-
-            </IconButton>
-              <IconButton id="answered-question"
-              type="button"
-              onClick={() =>  handleAnsweredQuestion({roomId, questionId})}
-            >
-              <AiOutlineCheck className="answered-icon" />
-            </IconButton>
-           </Icons>
-            
+            <Icons>
+              <IconButton
+                className="delete"
+                type="button"
+                onClick={() => handleDelete({ roomId, questionId })}
+              >
+                <IoTrashOutline className="delete-icon" />
+              </IconButton>
+              <IconButton
+                id="highlight-question"
+                type="button"
+                onClick={() =>
+                  handleHighlightQuestionUp({ roomId, questionId })
+                }
+              >
+                <RiSpaceShipLine className="highlight-icon" />
+              </IconButton>
+              <IconButton
+                id="answered-question"
+                type="button"
+                onClick={() => handleAnsweredQuestion({ roomId, questionId })}
+              >
+                <AiOutlineCheck className="answered-icon" />
+              </IconButton>
+            </Icons>
           ) : (
             <IconButton
               className={likeId ? `liked` : ""}

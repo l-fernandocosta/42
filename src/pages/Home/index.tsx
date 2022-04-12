@@ -13,7 +13,6 @@ import { child, get, ref } from "firebase/database";
 import { database } from "../../services/firebase";
 import swal from "sweetalert";
 
-
 export function Home() {
   let navigate = useNavigate();
   const { loginWithGoogle, isLoading, user } = useAuth();
@@ -90,21 +89,19 @@ export function Home() {
   return (
     <Container>
       <aside>
-        <Dot></Dot>
-        <Dot></Dot>
-
         <img id="astronaut" src={astronaut} alt="SPACE WALLPAPER" />
         <p>
           JUST MAKE THE <span>RIGHT</span> QUESTION<span>.</span> <br />
           BUT <span>DON'T PANIC!</span>
         </p>
+        <Dot></Dot>
+        <Dot></Dot>
       </aside>
 
       <main>
         <div>
           <span>42</span>
           {!user ? (
-              
             <GoogleButton disabled={isLoading} onClick={handleCreateRoom}>
               <CgGoogle className={"googleIcon"} size={"25px"} />
               LOGIN WITH GOOGLE

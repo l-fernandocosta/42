@@ -17,11 +17,11 @@ export const Header = styled.header`
     font-size: 4rem;
     font-style: italic;
     color: white;
+    cursor: pointer;
   }
   .IconsCopyClose {
-    display: flex; 
-    gap: 1rem; 
-    
+    display: flex;
+    gap: 1rem;
   }
 
   @media (max-width: 512px) {
@@ -65,23 +65,22 @@ export const DeleteButton = styled.button`
   @media (max-width: 512px) {
     width: 3.5rem;
     height: 3.5rem;
-    align-items: center; 
+    align-items: center;
 
     > span {
       display: none;
     }
     .close-room {
       margin-left: -0.4rem;
-      font-size: 10rem; 
-      width: 7rem; 
+      font-size: 10rem;
+      width: 7rem;
       height: 20rem;
-      width: 200rem; 
-    
+      width: 200rem;
     }
   }
 `;
 export const CopyButton = styled.div`
-  margin-right: 1rem; 
+  margin-right: 1rem;
   display: flex;
   align-items: center;
   height: auto;
@@ -98,8 +97,8 @@ export const CopyButton = styled.div`
     border: transparent;
   }
   > span {
-    margin: 0.3rem; 
-    text-align: center; 
+    margin: 0.3rem;
+    text-align: center;
     word-break: keep-all;
     font-size: 1rem;
   }
@@ -162,9 +161,9 @@ export const TitleRoom = styled.div`
       text-transform: uppercase;
     }
     > span {
-      padding: 0.5rem; 
+      padding: 0.5rem;
       font-size: 1rem;
-      margin-right: 1.1rem; 
+      margin-right: 1.1rem;
     }
   }
 `;
@@ -215,7 +214,7 @@ export const QuestionArea = styled.form`
     outline: none;
   }
   h1 {
-    color:white; 
+    color: white;
   }
 
   @media (max-width: 512px) {
@@ -223,14 +222,13 @@ export const QuestionArea = styled.form`
       width: 20rem;
       margin-top: -5rem;
     }
-    h1{
-      font-size: 1.5rem; 
+    h1 {
+      font-size: 1.5rem;
     }
-    h2{
-      font-size: 1.1rem; 
-      text-align: center; 
+    h2 {
+      font-size: 1.1rem;
+      text-align: center;
     }
-    
   }
 `;
 export const SendQuestionBtn = styled.button`
@@ -260,5 +258,48 @@ export const SendQuestionBtn = styled.button`
 
   @media (max-width: 512px) {
     width: 15rem;
+  }
+`;
+
+export const AdminButton = styled.button`
+  position: absolute;
+  right: 34rem;
+  top: 17rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 5rem;
+  background-color: transparent;
+  color: var(--yellow-700);
+  border: 1px solid var(--yellow-700);
+  
+  transition: all 0.5s;
+
+  :hover {
+    background-color: var(--yellow-700);
+    color: white;
+    transform: translateY(-10px);
+    box-shadow: 0px 8px 15px rgba(255, 229, 124, 0.2);
+    .gear-icon {
+      animation-name: gear-rotate;
+      animation-timing-function: linear;
+      animation-duration: 3s;
+      animation-iteration-count: infinite;
+      font-weight: bold; 
+      
+      
+    }
+  }
+  .gear-icon {
+    font-size: 2rem;
+
+  }
+
+  @keyframes gear-rotate {
+    from {
+      -moz-transform: rotate(0deg);
+    }
+    to {
+      -moz-transform: rotate(360deg);
+    }
   }
 `;

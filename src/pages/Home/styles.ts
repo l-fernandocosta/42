@@ -5,7 +5,6 @@ export const Container = styled.div`
   height: 100vh;
   justify-content: stretch;
   position: relative;
-  z-index: 1;
   overflow: hidden;
 
   aside {
@@ -30,19 +29,26 @@ export const Container = styled.div`
     }
 
     img {
+      animation-fill-mode: forwards;
+      animation-name: astronaut;
+      animation-timing-function: linear;
+      animation-duration: 8000ms;
+      animation-iteration-count: infinite;
       width: 20rem;
     }
-    .astronaut{
-      animation-name: astronaut; 
-      animation-timing-function: linear;
-      animation-duration: 8000ms; 
-      animation-iteration-count: infinite; 
+
+    @keyframes astronaut {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-50px);
+      }
+      100% {
+        top: 0px;
+      }
     }
-    @keyframes astronaut{
-      from{top: 0px;}
-      to{top: 100px;}
-    }
-  } 
+  }
 
   main {
     width: 100%;
@@ -91,12 +97,11 @@ export const Container = styled.div`
     }
   }
 `;
-
 export const FormId = styled.form`
   display: flex;
   flex-direction: column;
   padding-bottom: 3rem;
-  margin-top: -1rem; 
+  margin-top: -1rem;
 
   input {
     width: 33rem;
@@ -131,7 +136,7 @@ export const SubmitButton = styled.button`
   justify-content: center;
   text-align: center;
   align-content: center;
-  margin-top: -1rem; 
+  margin-top: -1rem;
   height: 3rem;
   font-size: 1.2rem;
 
@@ -160,7 +165,7 @@ export const SubmitButton = styled.button`
   @media (max-width: 512px) {
     margin-left: 1rem;
     width: 22rem;
-    margin-top: 1rem; 
+    margin-top: 1rem;
   }
 `;
 
@@ -170,24 +175,23 @@ export const Dot = styled.div`
   top: -2.5rem;
   height: 15rem;
   width: 15rem;
-  opacity: 65%;
+  opacity: 60%;
   background-color: #eead35;
   border-radius: 50%;
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.5);
-  animation-name: dot-transitions;
-  animation-duration: 8000ms;
-  animation-delay: 1000ms;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-out;
-  transition: all 0.5s;
+  box-shadow: 0px 0px 10px 6px rgba(0, 0, 0, 0.3);
+  animation-name: dot-animation;
+  animation-duration: 4000ms;
+  animation-timing-function: linear; 
+  animation-iteration-count: infinite; 
+  
 
-  &:nth-child(1) {
-    top: 50rem;
-    left: 10rem;
-    opacity: 70%;
-    height: 15rem;
-    width: 15rem;
-    background-color: pink;
+  :nth-last-child(2){
+    z-index: 0; 
+    top: 50rem; 
+    left: 30rem; 
+    opacity: 60%;
+    background-color: pink; 
+    margin-top: 2rem; 
   }
 `;
 

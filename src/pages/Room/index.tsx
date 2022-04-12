@@ -6,13 +6,15 @@ import {
   Container,
   SendQuestionBtn,
   CopyButton,
+  AdminButton,
 } from "./styles";
 
 import { IoCopy } from "react-icons/io5";
 import { FaUserAstronaut } from "react-icons/fa";
+import { BsGear } from "react-icons/bs";
 import { toast } from "react-toastify";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FormEvent, useCallback, useState } from "react";
 import { useAuth } from "../../context/UserContext";
 import { getDatabase, push, ref, set } from "firebase/database";
@@ -25,8 +27,8 @@ export function Room() {
   const { user, loginWithGoogle } = useAuth();
   const { id } = useParams();
   const [newQuestion, setNewQuestion] = useState("");
-
-  const { questions, title } = useRoom(id);
+  const navigate = useNavigate();
+  const { questions, roomAuthorId, title } = useRoom(id);
 
   const handleCopyClipboard = useCallback(() => {
     navigator.clipboard.writeText(String(id));
@@ -64,7 +66,13 @@ export function Room() {
       setNewQuestion("");
     }
   };
-
+ 
+  const handleRedirectAdminRoom = (id: string | undefined) => {
+    if(user?.uid === roomAuthorId){
+      navigate(`/admin/${id}`)
+    }
+    
+  }
   return (
     <Container>
       <Header>
@@ -73,10 +81,14 @@ export function Room() {
           <span>{id}</span>
           <IoCopy className="icon-copy" />
         </CopyButton>
-      </Header>
-
+      </Header> 
+      {user?.uid === roomAuthorId && (
+        <AdminButton onClick={() => handleRedirectAdminRoom(id)}>
+        <BsGear className="gear-icon"/>
+      </AdminButton>
+      )}
       <QuestionArea onSubmit={handleNewQuestion}>
-       
+      
         <TitleRoom>
           <h1>Room {title}</h1>
           <span>{questions.length} questions</span>
