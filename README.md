@@ -1,10 +1,14 @@
 <p align="center">
-  <img alt="Letmeask" src=".github/42.png" width="160px" >
+  <img alt="justask" src=".github/42.png" width="160px" >
 </p>
 
 <p align="center">
  <img  src="https://img.shields.io/static/v1?label=license&message=MIT&color=8257E5&labelColor=000000" alt="License">   
 </p>
+
+
+https://user-images.githubusercontent.com/98219451/163281372-20757725-8fe0-4ad8-8bb3-1fb128d2bc41.mp4
+
 
 
 
