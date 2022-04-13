@@ -187,8 +187,7 @@ export const QuestionArea = styled.form`
   }
   h1 {
     color: white;
-    text-transform: uppercase; 
-  
+    text-transform: uppercase;
   }
 
   @media (max-width: 512px) {
@@ -197,7 +196,8 @@ export const QuestionArea = styled.form`
       margin-top: -5rem;
     }
     h1 {
-      font-size: 1.5rem;
+      text-align: center;
+      font-size: 1.2rem;
     }
     h2 {
       font-size: 1.1rem;
@@ -239,13 +239,13 @@ export const AdminButton = styled.button`
   position: absolute;
   right: 34rem;
   top: 17.4rem;
-  padding: 0.3rem; 
+  padding: 0.3rem;
   cursor: pointer;
   border-radius: 5rem;
   background-color: transparent;
   color: var(--yellow-700);
   border: 1px solid var(--yellow-700);
-  
+
   transition: all 0.7s;
 
   :hover {
@@ -258,50 +258,66 @@ export const AdminButton = styled.button`
       animation-timing-function: linear;
       animation-duration: 4s;
       animation-iteration-count: infinite;
-      font-weight: bold; 
-      
-      
+      font-weight: bold;
     }
   }
   .gear-icon {
     font-size: 2rem;
   }
   @keyframes gear-rotate {
-    from {-moz-transform: rotate(0deg);}
-    to {-moz-transform: rotate(360deg);}
+    from {
+      -moz-transform: rotate(0deg);
+    }
+    to {
+      -moz-transform: rotate(360deg);
+    }
   }
   @media (max-width: 512px) {
-    top: 17rem; 
-    right: 3rem; 
-    .gear-icon{
+    top: 17rem;
+    right: 3rem;
+    .gear-icon {
       font-size: 1.4rem;
     }
   }
 `;
 
 export const ContainerImage = styled.div`
-display: flex; 
-flex-direction: column; 
-text-align: center; 
-align-items: center; 
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
 
-span{
-  color: var(--question-color);
-}
-img{
-  opacity: 40%;
-  margin-top: 3rem; 
-}
-
-@media (max-width: 512px) {
-
-  span{
-    font-size: 1rem;
+  span {
+    color: var(--question-color);
+  }
+  img {
+    opacity: 10%;
+    margin-top: 3rem;
+    animation-name: astronaut-sit;
+    animation-fill-mode: forwards;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
   }
 
-  img{
-    width: 22rem; 
+  @keyframes astronaut-sit {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+    100% {
+      top: 0px;
+    }
   }
-}
 
-`
+  @media (max-width: 512px) {
+    span {
+      font-size: 1rem;
+    }
+
+    img {
+      width: 22rem;
+    }
+  }
+`;

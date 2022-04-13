@@ -27,12 +27,12 @@ export function AdminRoom() {
       <Header id={id}/>
       <QuestionArea>
         <h1>
-          Welcome, {user?.name} ! 🚀 <br />
+          Welcome, {user?.name}!  🚀 <br />
           {questions.length > 0 ? (
             <h2>There are {questions.length} question(s) 😊</h2>
           ) : (
             <ContainerImage>
-              <span>THERE IS NO QUESTIONS YET </span>
+              <span>THERE IS NO QUESTIONS YET</span>
               <img
                 className="astronaut"
                 src={astronautAdminRoom}
