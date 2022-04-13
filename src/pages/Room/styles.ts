@@ -129,13 +129,15 @@ export const TitleRoom = styled.div`
   @media (max-width: 512px) {
     flex-direction: column;
     h1 {
-      font-size: 2.5rem;
+      text-align: center; 
+      font-size: 1.5rem !important;
       text-transform: uppercase;
     }
     > span {
-      padding: 0.5rem;
+      padding: 0.4rem;
       font-size: 1rem;
       margin-right: 1.1rem;
+      margin-top: 0.2rem; 
     }
   }
 `;
@@ -238,8 +240,8 @@ export const SendQuestionBtn = styled.button`
 export const AdminButton = styled.button`
   position: absolute;
   right: 34rem;
-  top: 17.4rem;
-  padding: 0.3rem;
+  top: 18rem;
+  padding: 0.4rem;
   cursor: pointer;
   border-radius: 5rem;
   background-color: transparent;
@@ -252,7 +254,7 @@ export const AdminButton = styled.button`
     background-color: var(--yellow-700);
     color: white;
     transform: translateY(-10px);
-    box-shadow: 0px 8px 15px rgba(255, 229, 124, 0.2);
+    box-shadow: 0px 6px 5px rgba(255, 229, 124, 0.2);
     .gear-icon {
       animation-name: gear-rotate;
       animation-timing-function: linear;
@@ -262,7 +264,7 @@ export const AdminButton = styled.button`
     }
   }
   .gear-icon {
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
   @keyframes gear-rotate {
     from {

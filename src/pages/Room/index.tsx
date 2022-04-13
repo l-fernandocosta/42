@@ -70,11 +70,7 @@ export function Room() {
 
       {user?.uid === roomAuthorId && (
         <AdminButton onClick={() => handleRedirectAdminRoom(id)}>
-          <Tooltip title="Go Home 🚀"
-          arrow
-          followCursor={true}
-          TransitionComponent={Fade}
-          TransitionProps={{ timeout: 600 }}>
+          <Tooltip title="Go Home 🚀" arrow followCursor={true}>
             <BsGear className="gear-icon" />
           </Tooltip>
         </AdminButton>

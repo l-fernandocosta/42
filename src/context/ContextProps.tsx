@@ -11,6 +11,7 @@ export type ContextProps= {
   user: UserProps | undefined,
   loginWithGoogle: () => Promise<void>, 
   isLoading: boolean,
+
 }
 
 export type UserContextProps = {
