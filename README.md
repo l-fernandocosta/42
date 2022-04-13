@@ -57,4 +57,4 @@ So, as we know,  right question must be asked.
 - [YouTube Video](https://www.youtube.com/watch?v=ZRiBYenFGCw) 
 
 
-⚡ [LinkedIn](https://discord.gg/gKUVrzrPrU)
+⚡ [LinkedIn](https://www.linkedin.com/in/fernando-costa-dev/)
