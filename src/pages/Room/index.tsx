@@ -1,27 +1,26 @@
 import {
-  Header,
   QuestionArea,
   UserAvatar,
   TitleRoom,
   Container,
   SendQuestionBtn,
-  CopyButton,
   AdminButton,
 } from "./styles";
 
-import { IoCopy } from "react-icons/io5";
 import { FaUserAstronaut } from "react-icons/fa";
 import { BsGear } from "react-icons/bs";
 import { toast } from "react-toastify";
 
 import { useNavigate, useParams } from "react-router-dom";
-import { FormEvent, useCallback, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useAuth } from "../../context/UserContext";
 import { getDatabase, push, ref, set } from "firebase/database";
 import { Questions } from "../../Components/Questions";
 
 import { Fade } from "react-awesome-reveal";
 import { useRoom } from "./useRoom";
+import { Header } from "../../Components/Header";
+import Tooltip from "@mui/material/Tooltip";
 
 export function Room() {
   const { user, loginWithGoogle } = useAuth();
@@ -29,13 +28,6 @@ export function Room() {
   const [newQuestion, setNewQuestion] = useState("");
   const navigate = useNavigate();
   const { questions, roomAuthorId, title } = useRoom(id);
-
-  const handleCopyClipboard = useCallback(() => {
-    navigator.clipboard.writeText(String(id));
-    return toast.info("Copied to clipboard.  😊", {
-      position: "top-left",
-    });
-  }, [id]);
 
   const handleLogin = () => {
     loginWithGoogle().then(() => toast.success("Welcome traveller !"));
@@ -66,29 +58,28 @@ export function Room() {
       setNewQuestion("");
     }
   };
- 
+
   const handleRedirectAdminRoom = (id: string | undefined) => {
-    if(user?.uid === roomAuthorId){
-      navigate(`/admin/${id}`)
+    if (user?.uid === roomAuthorId) {
+      navigate(`/admin/${id}`);
     }
-    
-  }
+  };
   return (
     <Container>
-      <Header>
-        <span>42.</span>
-        <CopyButton onClick={handleCopyClipboard}>
-          <span>{id}</span>
-          <IoCopy className="icon-copy" />
-        </CopyButton>
-      </Header> 
+      <Header id={id} />
+
       {user?.uid === roomAuthorId && (
         <AdminButton onClick={() => handleRedirectAdminRoom(id)}>
-        <BsGear className="gear-icon"/>
-      </AdminButton>
+          <Tooltip title="Go Home 🚀"
+          arrow
+          followCursor={true}
+          TransitionComponent={Fade}
+          TransitionProps={{ timeout: 600 }}>
+            <BsGear className="gear-icon" />
+          </Tooltip>
+        </AdminButton>
       )}
       <QuestionArea onSubmit={handleNewQuestion}>
-      
         <TitleRoom>
           <h1>Room {title}</h1>
           <span>{questions.length} questions</span>

@@ -77,15 +77,19 @@ export const Questions = ({
       icon: "error", 
       dangerMode: true, 
       buttons: ["I'm not cool", "Abort Mission 🖖"]
-    }).then(() => {
-      const questionRef = ref(db, `rooms/${roomId}/questions/${questionId}`);
-    update(questionRef, {
-      isAnswered: true,
-    }).then(() => {
-     swal("YOU'RE BREATHTAKING ❤️", "You question is answered now. ", {
-       dangerMode: true, 
-     });
-    });
+    }).then((value) => {
+      if(value === true){
+        const questionRef = ref(db, `rooms/${roomId}/questions/${questionId}`);
+      update(questionRef, {
+        isAnswered: true,
+      }).then(() => {
+        
+       swal("YOU'RE BREATHTAKING ❤️", "You question is answered now. ", {
+         dangerMode: true, 
+       });
+      });
+
+      }
     });
     
   };
