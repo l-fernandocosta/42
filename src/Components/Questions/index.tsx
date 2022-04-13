@@ -8,6 +8,7 @@ import { useMatch } from "react-router-dom";
 import { DeleteQuestion, ModalProps } from "../DeleteQuestion";
 import { toast } from "react-toastify";
 import swal from "sweetalert";
+import Tooltip from "@mui/material/Tooltip";
 
 interface QuestionProps {
   content: string;
@@ -72,26 +73,24 @@ export const Questions = ({
   const handleAnsweredQuestion = ({ roomId, questionId }: ModalProps) => {
     const db = getDatabase();
     swal({
-      title: "Kirk, if you want to abort the mission, that's completely cool.  🤔",
+      title:
+        "Kirk, if you want to abort the mission, that's completely cool.  🤔",
       text: "Marking the question as answered will not allow you to receive more likes and answers ",
-      icon: "error", 
-      dangerMode: true, 
-      buttons: ["I'm not cool", "Abort Mission 🖖"]
+      icon: "error",
+      dangerMode: true,
+      buttons: ["I'm not cool", "Abort Mission 🖖"],
     }).then((value) => {
-      if(value === true){
+      if (value === true) {
         const questionRef = ref(db, `rooms/${roomId}/questions/${questionId}`);
-      update(questionRef, {
-        isAnswered: true,
-      }).then(() => {
-        
-       swal("YOU'RE BREATHTAKING ❤️", "You question is answered now. ", {
-         dangerMode: true, 
-       });
-      });
-
+        update(questionRef, {
+          isAnswered: true,
+        }).then(() => {
+          swal("YOU'RE BREATHTAKING ❤️", "You question is answered now. ", {
+            dangerMode: true,
+          });
+        });
       }
     });
-    
   };
 
   return (
@@ -116,13 +115,16 @@ export const Questions = ({
         <Icons>
           {isAdminRoom?.pathname === `/admin/${roomId}` ? (
             <Icons>
-              <IconButton
-                className="delete"
-                type="button"
-                onClick={() => handleDelete({ roomId, questionId })}
-              >
-                <IoTrashOutline className="delete-icon" />
-              </IconButton>
+              <Tooltip title="Remove question 🗑" arrow followCursor={true}>
+                <IconButton
+                  className="delete"
+                  type="button"
+                  onClick={() => handleDelete({ roomId, questionId })}
+                >
+                  <IoTrashOutline className="delete-icon" />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="highlight question ⚡" arrow followCursor={true}>
               <IconButton
                 id="highlight-question"
                 type="button"
@@ -132,6 +134,8 @@ export const Questions = ({
               >
                 <RiSpaceShipLine className="highlight-icon" />
               </IconButton>
+              </Tooltip>
+              <Tooltip title="Mark as answered ✅" arrow followCursor={true}>
               <IconButton
                 id="answered-question"
                 type="button"
@@ -139,6 +143,7 @@ export const Questions = ({
               >
                 <AiOutlineCheck className="answered-icon" />
               </IconButton>
+              </Tooltip>
             </Icons>
           ) : (
             <IconButton
